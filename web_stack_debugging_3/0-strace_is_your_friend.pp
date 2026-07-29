@@ -1,4 +1,10 @@
-# Fixes the incorrect PHP file extension in the WordPress configuration
-exec { 'fix-wordpress':
-  command => '/bin/sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+# Increases the Nginx open-file limit to handle concurrent requests
+exec { 'increase-nginx-open-file-limit':
+  command => '/bin/sed -i s/15/4096/ /etc/default/nginx',
+  notify  => Service['nginx'],
+}
+
+service { 'nginx':
+  ensure => running,
+  enable => true,
 }
