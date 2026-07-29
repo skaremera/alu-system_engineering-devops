@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Starts the Apache web server to serve the required page
+
+service apache2 start
