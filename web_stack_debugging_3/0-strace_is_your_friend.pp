@@ -1,10 +1,5 @@
-# Increases the Nginx open-file limit to handle concurrent requests
-exec { 'increase-nginx-open-file-limit':
-  command => '/bin/sed -i s/15/4096/ /etc/default/nginx',
-  notify  => Service['nginx'],
-}
-
-service { 'nginx':
-  ensure => running,
-  enable => true,
+# Fix Nginx "accept4() failed (24: Too many open files)" message when simulting user requests
+exec {'modify max open files limit setting':
+  command => 'sed -i "s/15/10000/" /etc/default/nginx && sudo service nginx restart',
+  path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games',
 }
