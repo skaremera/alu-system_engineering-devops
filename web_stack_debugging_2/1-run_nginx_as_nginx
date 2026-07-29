@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Configures Nginx to run as nginx and listen on port 8080
+
+pkill nginx
+sed -i 's/listen 80 default_server;/listen 8080 default_server;/' /etc/nginx/sites-enabled/default
+sed -i 's/listen \[::\]:80 default_server;/listen [::]:8080 default_server;/' /etc/nginx/sites-enabled/default
+chown -R nginx:nginx /var/log/nginx /var/lib/nginx
+touch /var/run/nginx.pid
+chown nginx:nginx /var/run/nginx.pid
+sudo -u nginx nginx
